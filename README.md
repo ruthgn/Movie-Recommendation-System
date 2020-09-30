@@ -2,7 +2,7 @@
 
 Researcher/Author: Ruth Nainggolan
 
-Created a movie recommendation system using collaborative filtering in Python.
+Creating a movie recommendation system using collaborative filtering in Python.
 
 
 Files
