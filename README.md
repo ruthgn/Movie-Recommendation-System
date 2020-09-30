@@ -1,6 +1,6 @@
 # Movie-Recommendation-System
 
-Researcher/Author: Ruth Nainggolan
+Researcher/Author: Ruth G. Nainggolan
 
 Creating a movie recommendation system using collaborative filtering in Python.
 
