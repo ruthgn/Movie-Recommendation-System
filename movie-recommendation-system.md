@@ -697,7 +697,7 @@ moviemat.head()
 
 
 
-Most rated movie:
+Most rated movies:
 
 
 ```python
