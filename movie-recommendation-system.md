@@ -99,7 +99,7 @@ df.head()
 
 
 
-Note: Since movie titles are reprented by *item_id* and not the actual movie names, we will use the **Movie_ID_Titles.csv** file I've included in the project [repository](https://github.com/ruthgn/Movie-Recommendation-System) to grab and merge them with the DataFrame we've created.
+*Note*: Since movie titles are reprented by *item_id* and not the actual movie names, we will use the **Movie_ID_Titles.csv** file I've included in the project [repository](https://github.com/ruthgn/Movie-Recommendation-System) to grab and merge them with the DataFrame we've created.
 
 
 ```python
@@ -1438,11 +1438,12 @@ corrToyStory[corrToyStory['count of rating']>100].sort_values('Correlation', asc
 </table>
 </div>
 
+
 Sure enough, recommendations based off of *Toy Story* are a mix of family-friendly flicks and fun action films.
 
 Lastly, we will check out recommendations for fans of The Silence of the Lambs. 
 
-Note: I will be repeating the steps I applied previously to the two movies in the section below. When re-running this project code, you can easily replace variables representing *The Silence of Lambs* with those representing your movie of choice to get a personalized recommendation.
+*Note*: I will be repeating the steps I applied previously to the two movies in the section below. When re-running this project code, you can easily replace variables representing *The Silence of Lambs* with those representing your movie of choice to get a personalized recommendation.
 
 
 ```python
