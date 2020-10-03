@@ -1,7 +1,7 @@
 *Full project with complete code and datasets available on my Github [repository](https://github.com/ruthgn/Movie-Recommendation-System).*
 
-In recommender systems theory in general, the two most common types of recommender systems are **Content-Based** and **Collaborative Filtering**. Content-based recommender systems focus on the attributes of the items and give you recommendations based on the similarity between them. Meanwhile, collaborative filtering produces recommendations based on the knowledge of users' attitude to items; it uses the "wisdom of the crowd" to recommend items. You have probably encountered one use case of collaborative filtering while browsing on Amazon where based on other people's shopping experiences, Amazon will suggest items that it believes you will enjoy.
-The underlying difference between content-based and collaborative filtering lies in how the former focuses on item similarities while the latter user preferences.
+In recommender systems theory, the two most common types of recommender systems are **Content-Based** and **Collaborative Filtering**. Content-based recommender systems focus on the attributes of items and give you recommendations based on similarities between them. Meanwhile, collaborative filtering produces recommendations based on the knowledge of users' attitude toward items; it uses the "wisdom of the crowd" to produce recommendations. A common example of collaborative filtering is the recommendations Amazon suggests while customers browse for a particular item. Suggestions are based on other shoppers' purchases of similar items and products purchased within the same basket.
+The underlying difference between content-based and collaborative filtering lies in how the former focuses on item similarities and the latter, user preferences.
 
 Overall, collaborative filtering is more commonly used in content based systems because it usually gives better results and is relatively easy to understand from an overall implementation perspective. This post outlines one of the approaches I use with collaborative filtering to create a simple movie recommendation system with Python. We will use the famous MovieLens dataset, which is one of the most common datasets used when implementing and testing recommender engines. It contains 100k movie ratings from 943 users and a selection of 1682 movies. You can download the dataset [here](http://files.grouplens.org/datasets/movielens/ml-100k.zip). Full description of the dataset is available [here](http://files.grouplens.org/datasets/movielens/ml-100k-README.txt).  
 
@@ -99,7 +99,7 @@ df.head()
 
 
 
-Note: Since we only have movie titles reprented by *item_id* and not the actual movie names, we will use the **Movie_ID_Titles.csv** file I've included in the project [repository](https://github.com/ruthgn/Movie-Recommendation-System) to grab the movie names and merge it with the DataFrame we've created.
+Note: Since movie titles are reprented by *item_id* and not the actual movie names, we will use the **Movie_ID_Titles.csv** file I've included in the project [repository](https://github.com/ruthgn/Movie-Recommendation-System) to grab and merge them with the DataFrame we've created.
 
 
 ```python
@@ -254,7 +254,7 @@ df.head()
 
 ## Exploratory Data Analysis
 
-Let's explore the data a bit and get a look at some of the best rated movies!
+Let's explore the data a bit and take a look at some of the best rated movies!
 
 
 ```python
@@ -265,7 +265,7 @@ import seaborn as sns
 sns.set_style('darkgrid')
 ```
 
-We're going to create a ratings DataFrame that contains each movie's average/mean rating and number/count of ratings. But before that, let's look at movies with the highest average rating and those that recieved highest number of ratings. Be aware that movies with the highest average ratings displayed below could very well be those that have only been watched by extremely few people and rated highly by its miniscule audience and not necessarily box office hits.
+We're going to create a ratings DataFrame that contains each movie's average rating score and total count of ratings. But before that, let's look at two groups of movies: one with *high* ratings vs one with *numerous* ratings. Be aware that movies with the highest average ratings in this data set are not necessarily box office hits given the total number of ratings. By contrast, the movie set with the highest total count of ratings does contain box office hits you're likely familiar with.
 
 
 ```python
@@ -469,7 +469,7 @@ ratings['count of rating'].hist(bins=30)
 ![png](movie-recommendation-system_files/movie-recommendation-system_21_1.png)
 
 
-We learned that most movies in the dataset have very few (zero or one) reviews while there are several movie titles (probably considered 'blockbusters') that have reviews numbering in the hundreds.
+We learned that most movies in the dataset have very few (zero or one) reviews while several others (probably considered 'blockbusters') have reviews numbering in the hundreds.
 
 
 ```python
@@ -493,7 +493,7 @@ Now that we have a general idea of what the data looks like, let's move on to cr
 
 ## Recommending Similar Movies
 
-We will build a recommendation system based on similarity in user perception. Let's create a matrix that has the user IDs on one axis and the movie title on another axis. Each cell will then consist of the rating the user gave to that movie. Note that there are a lot of NaN values because most users/people have not seen most of the movies.
+We will build a recommendation system based on similarities in user perception. Let's create a matrix that has the user IDs on one axis and the movie title on another axis. Each cell will then consist of the rating the user gave to that movie. Note that there are a lot of NaN values because most users have not seen most of movies in the dataset.
 
 
 ```python
@@ -991,8 +991,7 @@ ratings.sort_values('count of rating', ascending=False).head(50)
 
 
 
-I'm going to choose three very different movies to test our recommender system with: **Star Wars (1977)**--a sci-fi movie, **Toy Story (1995)**--an animated family comedy, and lastly, **The Silence of the Lambs (1991)**--a thriller and 
-horror piece.
+I'm going to choose three very different movies to test our recommender system: **Star Wars (1977)**--a sci-fi action, **Toy Story (1995)**--an animated family comedy, and lastly, **The Silence of the Lambs (1991)**--a horror and psychological thriller.
 
 
 ```python
@@ -1159,7 +1158,7 @@ corrStarWars.sort_values('Correlation',ascending=False).head(10)
 
 
 
-We will fix this by filtering out movies that have less than 100 reviews--this value was chosen based off the what we discovered from the histogram visualization during our exploratory data analysis earlier.
+We will fix this by filtering out movies that have less than 100 reviews--this value was chosen based off of what we discovered from the histogram visualization during our exploratory data analysis earlier.
 
 
 ```python
@@ -1298,7 +1297,7 @@ corrStarWars[corrStarWars['count of rating']>100].sort_values('Correlation',
 
 
 
-These recommendations make a lot of sense! In fact, if you are a Star Wars fan you should definitely be familiar with its sequels, *The Empire Strikes Back* and *Return of the Jedi*, with which they all form the original Star Wars Trilogy.
+These recommendations make a lot of sense! In fact, if you are a Star Wars fan you should definitely be familiar with its sequels, *The Empire Strikes Back* and *Return of the Jedi*, which make up the original Star Wars Trilogy.
 
 Now let's do the same for Toy Story and see what recommendations are in store for us!
 
@@ -1439,11 +1438,11 @@ corrToyStory[corrToyStory['count of rating']>100].sort_values('Correlation', asc
 </table>
 </div>
 
-
+Sure enough, recommendations based off of *Toy Story* are a mix of family-friendly flicks and fun action films.
 
 Lastly, we will check out recommendations for fans of The Silence of the Lambs. 
 
-Note: I will be repeating the steps I applied previously to the two movies in the section below. When re-running this project code, you can easily replace variables representing *The Silence of Lambs* with those representing your movie of choice instead to get a personalized recommendation.
+Note: I will be repeating the steps I applied previously to the two movies in the section below. When re-running this project code, you can easily replace variables representing *The Silence of Lambs* with those representing your movie of choice to get a personalized recommendation.
 
 
 ```python
@@ -1542,4 +1541,4 @@ corrSilenceOfTheLambs[corrSilenceOfTheLambs['count of rating']>100].sort_values(
 
 I think the recommendations generated from *The Silence of The Lamb* are particularly great for those who enjoy thrillers and horror titles!
 
-Are you looking for movie recommendations? Feel free to run this code yourself by accessing the project [repository](https://github.com/ruthgn/Movie-Recommendation-System) and input your favorite movie to see what other movies you may possibly enjoy!
+Are you looking for movie recommendations? Feel free to run this code yourself by accessing the project [repository](https://github.com/ruthgn/Movie-Recommendation-System) and inputing your favorite movie!
